@@ -1,4 +1,8 @@
-@import 'src/assets/styles/colors.scss';
+@import '../../../../../assets/styles/colors.scss';
+
+.nav-list{
+    flex-grow: 1;
+}
 
 .menu-a-item{
     padding-left: 1.5rem;
