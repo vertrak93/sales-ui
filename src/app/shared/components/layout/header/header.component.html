@@ -1,0 +1,26 @@
+<header>
+    <mat-toolbar color="primary" class="toolbar-header">
+        
+        <button mat-icon-button (click)="toggleSideNav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <span class="header-title">Ventas</span>
+        <span class="flex-fill"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <span disabled mat-menu-item>{{username}}</span>
+            <button mat-menu-item>
+              <mat-icon>settings</mat-icon>
+              <span>Configuración</span>
+            </button>
+            <button mat-menu-item (click)="logOut()">
+              <mat-icon>logout</mat-icon>
+              <span>Salir</span>
+            </button>
+          </mat-menu>
+        
+    </mat-toolbar>
+</header>

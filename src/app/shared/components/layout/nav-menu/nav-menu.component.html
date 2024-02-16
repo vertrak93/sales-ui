@@ -1,0 +1,38 @@
+<mat-nav-list>
+
+    @for(item of siteMapItems; track $index ){
+      
+      @if(!item.children){
+        <a mat-list-item [routerLink]="['{{item.route}}']" class="menu-a-item">
+          <div class="item-menu">
+            <mat-icon>{{item.icon}}</mat-icon>
+            <span class="menu-item-text">{{item.title}}</span>
+          </div>
+        </a>
+      }
+      
+      @if(item.children){
+        <mat-expansion-panel mat-list-item class="expansion-panel" [class.mat-elevation-z0]="true">
+          <mat-expansion-panel-header class="item-menu">
+      
+              <mat-icon>{{item.icon}}</mat-icon>
+              <span class="menu-item-text">{{item.title}}</span>
+            
+          </mat-expansion-panel-header>
+          
+          <mat-nav-list>
+            
+            @for (child of item.children; track $index) {
+                <a mat-list-item [routerLink]="['{{child.route}}']">
+                    <div class="item-menu">
+                        <span>{{child.title}}</span>
+                    </div>
+                </a>
+            }
+
+          </mat-nav-list>
+        </mat-expansion-panel>
+      }
+    }
+  
+  </mat-nav-list>
