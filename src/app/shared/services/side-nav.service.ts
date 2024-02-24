@@ -6,20 +6,20 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SideNavService {
 
-  private sideNavOpened = new BehaviorSubject<boolean>(true);
+  private sideNavOpened$ = new BehaviorSubject<boolean>(true);
 
   constructor() { }
 
   toggleSideNav(){
-    this.sideNavOpened.next(!this.sideNavOpened.value);
+    this.sideNavOpened$.next(!this.sideNavOpened$.value);
   }
 
   getSideNavOpened(){
-    return this.sideNavOpened.asObservable();
+    return this.sideNavOpened$.asObservable();
   }
 
   setSideNavOpened(value:boolean){
-    this.sideNavOpened.next(value);
+    this.sideNavOpened$.next(value);
   }
 
 }

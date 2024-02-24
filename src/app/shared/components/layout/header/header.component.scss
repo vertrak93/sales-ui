@@ -5,3 +5,13 @@
 .header-title{
     padding-left: 1rem;
 }
+
+.username{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+}

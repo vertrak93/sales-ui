@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { SideNavService } from '../../../services/side-nav.service';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
+import { ScreenService } from '../../../services/screen.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -12,15 +13,23 @@ import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 })
 export class SidenavComponent {
 
-  private sideNaSrv = inject(SideNavService);
+  private sideNavSrv = inject(SideNavService);
+  private screanSrv = inject(ScreenService);
 
   sidenavOpened: boolean = true;
   mode:MatDrawerMode = 'side';
 
   constructor(){
 
-    this.sideNaSrv.getSideNavOpened().subscribe( value => this.sidenavOpened = value );
+    this.sideNavSrv.getSideNavOpened().subscribe( value => this.sidenavOpened = value );
+    this.screanSrv.isHandset$.subscribe( (e:boolean) => this.updateSideNav(e) );
     
+  }
+
+  updateSideNav(isHandset:boolean){
+    this.mode = isHandset ? 'over' : 'side';
+    console.log(this.mode);
+    this.sideNavSrv.setSideNavOpened(!isHandset);
   }
 
 }

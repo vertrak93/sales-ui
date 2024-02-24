@@ -1,0 +1,32 @@
+.login-content, .card-content, .form-login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+
+.card{
+    width: 400px;
+}
+
+.form-login{
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.text-login{
+    padding-bottom: 0.8rem;
+}
+
+.icon-color{
+    color: #505050;
+}
+
+.title-login{
+    font-size: 40px;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}

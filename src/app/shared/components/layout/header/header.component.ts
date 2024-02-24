@@ -5,6 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { SideNavService } from '../../../services/side-nav.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,7 @@ import { SideNavService } from '../../../services/side-nav.service';
 export class HeaderComponent {
 
   private sideNavSrv = inject(SideNavService);
+  private loginSrv = inject(LoginService);
 
   username:string = '';
 
@@ -24,6 +26,11 @@ export class HeaderComponent {
   }
 
   logOut(){
+    this.loginSrv.logOut();
+  }
+
+  get session(){
+    return this.loginSrv.getUser();
   }
 
 }

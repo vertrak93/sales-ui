@@ -1,7 +1,12 @@
-
-<app-header class="header" />
-<app-sidenav>
+@if(isLogged){
+    <app-header class="header" />
+    <app-sidenav>
+        <router-outlet />
+    </app-sidenav>
+}
+@else {
     <router-outlet />
-</app-sidenav>
+}
+
 
 

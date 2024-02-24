@@ -1,0 +1,70 @@
+<section class="login-content">
+
+    <mat-card class="card" color="primary">
+        <mat-card-content class="card-content">
+            
+            <img style="width: 100px;" src="https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg">
+
+            <div class="text-login">
+                <span>Ingresa tu usuario y contraseña.</span>
+            </div>
+
+            <form class="form-login" [formGroup]="loginForm">
+
+                <mat-form-field class="full-width">
+                    <mat-label>Usuario</mat-label>
+                    <input type="text" matInput placeholder="Ingrese usuario" formControlName="username">
+                    <mat-icon class="icon-color" matSuffix>person</mat-icon>
+                    @if(loginForm.controls.username.invalid && (loginForm.controls.username.dirty || loginForm.controls.username.touched)){
+                        <mat-error>
+                          @if(loginForm.controls.username.errors?.['required']){
+                            Ingrese usuario.
+                          }
+                        </mat-error>
+                    } @if(loginForm.controls.username.invalid && (loginForm.controls.username.dirty || loginForm.controls.username.touched)){
+                        <mat-error>
+                          @if(loginForm.controls.username.errors?.['required']){
+                            Ingrese un usuario.
+                          }
+                        </mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <mat-label>Contraseña</mat-label>
+                    <input [type]="showPassword ? 'text' : 'password'" matInput placeholder="Ingrese contraseña" formControlName="password">
+                    <mat-icon class="icon-color" matSuffix (click)="showPassword = !showPassword" >
+                        {{showPassword ? 'visibility' : 'visibility_off'}}
+                    </mat-icon>
+                    @if(loginForm.controls.password.invalid && (loginForm.controls.password.dirty || loginForm.controls.password.touched)){
+                        <mat-error>
+                        @if(loginForm.controls.password.errors?.['required']){
+                            Ingrese contraseña.
+                        }
+                        </mat-error>
+                    }
+                </mat-form-field>
+
+                <button type="submit" mat-flat-button color="primary" class="full-width color-white" (click)="submitForm()" [disabled]="disabledLogin">
+                    @if (!disabledLogin) {
+                        Ingresar
+                    }
+                    @if(disabledLogin){
+                        <mat-icon>
+                            <mat-spinner color="primary" diameter="18"></mat-spinner>
+                        </mat-icon>
+                    }
+                </button>
+
+                @if(errorLogin){
+                    <mat-error class="mb-3">
+                        &#10060; {{errorText}}
+                    </mat-error>
+                }
+
+            </form>
+
+        </mat-card-content>
+    </mat-card>
+
+</section>

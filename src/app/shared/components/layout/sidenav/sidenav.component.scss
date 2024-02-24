@@ -9,9 +9,6 @@
 .sidenav{
     padding-top: 50px;
     display: flex;
-    //align-items: center;
-    //justify-content: center;
-    //flex-direction: column;
     width: 250px;
     background-color: $dark-gray;
     color: white;
@@ -26,6 +23,7 @@
 
 .main-content{
     flex: 1;
+    padding: 20px;
 }
 
 .version{

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/components/layout/header/header.component";
 import { SidenavComponent } from './shared/components/layout/sidenav/sidenav.component';
+import { LoginService } from './shared/services/login.service';
 
 @Component({
     selector: 'app-root',
@@ -14,5 +15,15 @@ import { SidenavComponent } from './shared/components/layout/sidenav/sidenav.com
               ]
 })
 export class AppComponent {
+
+  private loginSrv:LoginService = inject(LoginService);
   title = 'sales-ui';
+
+  ngOnInit(){
+  }
+
+  get isLogged(){
+    return this.loginSrv.loggedIn;
+  }
+
 }
