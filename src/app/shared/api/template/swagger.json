@@ -10,7 +10,7 @@
     }
   ],
   "paths": {
-    "/api/authenticate": {
+    "/api/auth/login": {
       "post": {
         "tags": [
           "Auth"
@@ -58,7 +58,7 @@
         }
       }
     },
-    "/api/authenticate/refresh-token": {
+    "/api/auth/refresh-token": {
       "post": {
         "tags": [
           "Auth"

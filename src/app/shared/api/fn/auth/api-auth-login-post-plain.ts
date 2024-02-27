@@ -9,12 +9,12 @@ import { RequestBuilder } from '../../request-builder';
 import { ApiResponseDto } from '../../models/api-response-dto';
 import { AuthenticateDto } from '../../models/authenticate-dto';
 
-export interface ApiAuthenticatePost$Plain$Params {
+export interface ApiAuthLoginPost$Plain$Params {
       body?: AuthenticateDto
 }
 
-export function apiAuthenticatePost$Plain(http: HttpClient, rootUrl: string, params?: ApiAuthenticatePost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
-  const rb = new RequestBuilder(rootUrl, apiAuthenticatePost$Plain.PATH, 'post');
+export function apiAuthLoginPost$Plain(http: HttpClient, rootUrl: string, params?: ApiAuthLoginPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
+  const rb = new RequestBuilder(rootUrl, apiAuthLoginPost$Plain.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
@@ -29,4 +29,4 @@ export function apiAuthenticatePost$Plain(http: HttpClient, rootUrl: string, par
   );
 }
 
-apiAuthenticatePost$Plain.PATH = '/api/authenticate';
+apiAuthLoginPost$Plain.PATH = '/api/auth/login';

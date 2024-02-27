@@ -55,7 +55,7 @@ export class LoginComponent {
       this.disabledLogin = true;
       const Authenticate: AuthenticateDto = this.loginForm.value;
 
-      this.authSrv.apiAuthenticatePost$Json({body: Authenticate}).subscribe({
+      this.authSrv.apiAuthLoginPost$Json({body: Authenticate}).subscribe({
         next: (resp) => {
           this.loginSrv.HandleLogin(resp);
         },

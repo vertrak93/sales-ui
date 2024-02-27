@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiResponseDto, AuthenticateDto } from '../api/models';
 import { AuthService } from '../api/services';
+import { HttpContextToken } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 const defaultPath = '/';  
 
@@ -22,7 +24,7 @@ export class LoginService {
   private _lastAuthenticatedPath: string = defaultPath;
   private _user!: IUser;
 
-  constructor(private router: Router, private authSrv:AuthService) { }
+  constructor(private router: Router, private authSrv:AuthService, private cookieSrv: CookieService) { }
 
   set lastAuthenticatedPath(value: string) {
     this._lastAuthenticatedPath = value;
@@ -36,16 +38,18 @@ export class LoginService {
   get loggedIn(): boolean {
 
     const session = (localStorage.getItem('session') ?? '').length > 0;
-    const jwt = (localStorage.getItem('jwt') ?? '').length > 0;
-    const refreshToken = (localStorage.getItem('refreshToken') ?? '').length > 0;
+    const roles = (localStorage.getItem('role') ?? '').length > 0;
+    const jwt = this.cookieSrv.check('jwt');
+    const refreshToken = this.cookieSrv.check('refreshToken');
 
-    return jwt && session && refreshToken;
+    return jwt && session && refreshToken && roles;
   }
 
   async logOut() {
+
+    this.cookieSrv.delete('jwt');
+    this.cookieSrv.delete('refreshToken');
     localStorage.removeItem('session');
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('refreshToken');
     localStorage.removeItem('role');
     this.router.navigate(['/login']);
   }
@@ -56,12 +60,14 @@ export class LoginService {
     const refreshToken = resp.data.refreshToken;
     const role = resp.data.role;
 
+    this.cookieSrv.set('jwt', jwt, {path: '/', secure: true});
+    this.cookieSrv.set('refreshToken', refreshToken, {path: '/', secure: true});
     localStorage.setItem('session', btoa( JSON.stringify(user)));
-    localStorage.setItem('jwt', btoa( JSON.stringify(jwt)));
-    localStorage.setItem('refreshToken', btoa( JSON.stringify(refreshToken)));
     localStorage.setItem('role', btoa( JSON.stringify(role)));
 
     this.router.navigate([this._lastAuthenticatedPath]);
+
+    HttpContextToken
   }
 
 }

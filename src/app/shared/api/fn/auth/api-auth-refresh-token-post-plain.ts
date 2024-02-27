@@ -9,12 +9,12 @@ import { RequestBuilder } from '../../request-builder';
 import { ApiResponseDto } from '../../models/api-response-dto';
 import { TokenDto } from '../../models/token-dto';
 
-export interface ApiAuthenticateRefreshTokenPost$Plain$Params {
+export interface ApiAuthRefreshTokenPost$Plain$Params {
       body?: TokenDto
 }
 
-export function apiAuthenticateRefreshTokenPost$Plain(http: HttpClient, rootUrl: string, params?: ApiAuthenticateRefreshTokenPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
-  const rb = new RequestBuilder(rootUrl, apiAuthenticateRefreshTokenPost$Plain.PATH, 'post');
+export function apiAuthRefreshTokenPost$Plain(http: HttpClient, rootUrl: string, params?: ApiAuthRefreshTokenPost$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
+  const rb = new RequestBuilder(rootUrl, apiAuthRefreshTokenPost$Plain.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/*+json');
   }
@@ -29,4 +29,4 @@ export function apiAuthenticateRefreshTokenPost$Plain(http: HttpClient, rootUrl:
   );
 }
 
-apiAuthenticateRefreshTokenPost$Plain.PATH = '/api/authenticate/refresh-token';
+apiAuthRefreshTokenPost$Plain.PATH = '/api/auth/refresh-token';
