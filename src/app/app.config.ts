@@ -10,6 +10,7 @@ import { SideNavService } from './shared/services/side-nav.service';
 import { AuthService } from './shared/api/services';
 import { LoginService } from './shared/services/login.service';
 import { ApiInterceptorService, apiInterceptor } from './shared/interceptors/api.interceptor';
+import { Alerts } from './shared/utils/alerts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +21,7 @@ export const appConfig: ApplicationConfig = {
     SideNavService,
     AuthService,
     LoginService,
-    ApiInterceptorService
+    ApiInterceptorService,
+    Alerts
   ]
 };
