@@ -14,8 +14,9 @@ import { MatCardModule } from '@angular/material/card';
 
 import { UserDto } from '../../shared/api/models';
 import { UserService } from '../../shared/api/services';
-import { catchError, map, of, startWith } from 'rxjs';
 import { Alerts } from '../../shared/utils/alerts';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @Component({
   selector: 'app-user',
@@ -41,6 +42,7 @@ export class UserComponent {
   private userSrv: UserService = inject(UserService);
   private formBuilder: FormBuilder = inject(FormBuilder);
   private alert: Alerts = inject(Alerts);
+  private dialog: MatDialog = inject(MatDialog);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   displayedColumns: string[] = ['number', 'username', 'fisrtName', 'lastName', 'email', 'options'];
@@ -84,12 +86,42 @@ export class UserComponent {
 
   }
 
+  clickAdd(){
+  }
+
+  changePassword(item:UserDto){
+    const dialogRef = this.dialog.open(ChangePasswordComponent, {
+      data: item,
+      disableClose: true
+    });
+  }
+
+  submitForm(){
+    if(this.userForm.valid){
+      const data = this.userForm.value;
+      this.postUser(data);
+      this.handlerPostUser();
+    }
+    else{
+      this.userForm.markAllAsTouched();
+    }
+  }
+
+  cancel(){
+    this.userForm = this.initializeForm();
+  }
+
+  //#region http methods
   getUsers(){
     this.isLoadingResults = true;
     this.userSrv.apiUserGet$Json( { Page: this.paginator.pageIndex + 1, PageSize: this.pageSize, Filter: this.filter })
       .subscribe({
         next: (resp) => {
           this.data = resp.data as UserDto[];
+        },
+        error: () =>{
+          this.isLoadingResults = false;
+          this.isRateLimitReached = true;
         },
         complete: () =>{
           this.isLoadingResults = false;
@@ -98,17 +130,22 @@ export class UserComponent {
       });
   }
 
-  
-
-  test(){
-    this.alert.ConfirmAlert('estas seguro', 'question', this.test2.bind(this));
+  postUser(data:any){
+    this.userSrv.apiUserPost$Json({body:data}).subscribe({
+      next: (res) =>{
+        this.alert.Toast(res.message!, 'success');
+      }
+    })
   }
 
-  test2(){
-    alert(JSON.stringify(this.data));
-  }
+  //#endregion
 
-  clickOption(data:any){
-    alert(JSON.stringify(data));
+  //#region handlers
+  handlerPostUser(){
+    this.getUsers();
+    this.userForm = this.initializeForm();
   }
+  //#endregion
+
+
 }

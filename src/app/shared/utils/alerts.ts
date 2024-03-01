@@ -12,7 +12,7 @@ export class Alerts{
             position: "top-end",
             showConfirmButton: false,
             showCloseButton: true,
-            timer: 3000,
+            timer: 3500,
             timerProgressBar: true,
             iconColor: 'white',
             customClass: {

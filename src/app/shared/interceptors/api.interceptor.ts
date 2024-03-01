@@ -6,6 +6,7 @@ import { LoginService } from '../services/login.service';
 import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { TokenDto, UserDto } from '../api/models';
 import { AuthService } from '../api/services';
+import { Alerts } from '../utils/alerts';
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -34,6 +35,7 @@ export class ApiInterceptorService{
   private cookieService: CookieService = inject(CookieService);
   private loginSrv: LoginService = inject(LoginService);
   private authSrv: AuthService = inject(AuthService);
+  private alert: Alerts = inject(Alerts);
 
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
@@ -44,8 +46,9 @@ export class ApiInterceptorService{
       this.refreshTokenSubject.next(null);
       const jwt = this.cookieService.get('jwt');
       const refreshToken = this.cookieService.get('refreshToken');
+      const user = this.loginSrv.getUser();
 
-      let token:TokenDto = { jwt: jwt, refreshToken: refreshToken };
+      let token:TokenDto = { jwt: jwt, refreshToken: refreshToken, user: user };
 
       if (refreshToken){
         return this.authSrv.apiAuthRefreshTokenPost$Json( {body: token} ).pipe(
@@ -83,7 +86,7 @@ export class ApiInterceptorService{
 
   public handleError(err: HttpErrorResponse){
     const error = err.error.message ? err.error.message : err.message;
-    console.log('',error);
+    this.alert.Toast(error, 'error');
   }
 
 }

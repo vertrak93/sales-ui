@@ -16,7 +16,7 @@
         </button>
       }
     </mat-form-field>
-    <button mat-raised-button color="primary">
+    <button mat-raised-button color="primary" (click)="clickAdd()">
       <mat-icon>add</mat-icon>
       Agregar
   </button>
@@ -65,17 +65,17 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="clickOption(row)">
+          <button mat-menu-item>
             <mat-icon>edit</mat-icon>
             <span>Editar</span>
           </button>
-          <button mat-menu-item (click)="clickOption(row)">
+          <button mat-menu-item>
             <mat-icon>do_not_disturb_on</mat-icon>
             <span>Deshabilitar</span>
           </button>
-          <button mat-menu-item (click)="clickOption(row)">
+          <button mat-menu-item (click)="changePassword(row)">
             <mat-icon>password</mat-icon>
-            <span>Reset Password</span>
+            <span>Cambiar constraseña</span>
           </button>
         </mat-menu>
 
@@ -114,6 +114,7 @@
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Usuario</mat-label>
                 <input matInput maxlength="50" placeholder="Ingrese Usuario" formControlName="username">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -121,6 +122,7 @@
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Nombre</mat-label>
                 <input matInput maxlength="50" placeholder="Ingrese Nombre" formControlName="fisrtName">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -128,6 +130,7 @@
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Apellido</mat-label>
                 <input matInput maxlength="50" placeholder="Ingrese Apellido" formControlName="lastName">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -139,6 +142,7 @@
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput maxlength="50" placeholder="Ingrese Email" formControlName="email">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -146,6 +150,7 @@
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Password</mat-label>
                 <input matInput maxlength="50" type="password" placeholder="Ingrese Password" formControlName="password">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -153,13 +158,13 @@
   
           <div class="row justify-content-end">
             <div class="col-12 col-sm-12 col-md-4">
-              <button mat-raised-button class="full-width" type="submit" color="primary">
+              <button mat-raised-button class="full-width" type="submit" (click)="submitForm()" color="primary">
                 <mat-icon>save</mat-icon>
                 Guardar
             </button>
             </div>
             <div class="col-12 col-sm-12 col-md-4">
-              <button mat-raised-button class="full-width" type="button" color="warn" (click)="test()">
+              <button mat-raised-button class="full-width" type="button" color="warn" (click)="cancel()" >
                 <mat-icon>cancel</mat-icon>
                 Cancelar
             </button>

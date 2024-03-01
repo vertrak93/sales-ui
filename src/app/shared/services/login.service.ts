@@ -1,20 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiResponseDto, AuthenticateDto } from '../api/models';
+import { ApiResponseDto, AuthenticateDto, UserDto } from '../api/models';
 import { AuthService } from '../api/services';
 import { HttpContextToken } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
 const defaultPath = '/';  
-
-export interface IUser {
-  userId: number
-  username: string
-  fisrtName: string
-  lastName: string
-  email: string
-  password: string
-}
 
 @Injectable({
   providedIn: 'root'
@@ -22,16 +13,16 @@ export interface IUser {
 export class LoginService {
 
   private _lastAuthenticatedPath: string = defaultPath;
-  private _user!: IUser;
+  private _user!: UserDto;
 
   constructor(private router: Router, private authSrv:AuthService, private cookieSrv: CookieService) { }
 
   set lastAuthenticatedPath(value: string) {
     this._lastAuthenticatedPath = value;
   }
-
+  
   getUser(){
-    const session = JSON.parse(atob(localStorage.getItem('session')!)) as IUser;
+    const session = JSON.parse(atob(localStorage.getItem('session')!)) as UserDto;
     return session;
   }
 
