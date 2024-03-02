@@ -12,6 +12,8 @@ export interface ApiUserGet$Plain$Params {
   Page?: number;
   PageSize?: number;
   Filter?: string;
+  DateStart?: string;
+  DateEnd?: string;
 }
 
 export function apiUserGet$Plain(http: HttpClient, rootUrl: string, params?: ApiUserGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
@@ -20,6 +22,8 @@ export function apiUserGet$Plain(http: HttpClient, rootUrl: string, params?: Api
     rb.query('Page', params.Page, {});
     rb.query('PageSize', params.PageSize, {});
     rb.query('Filter', params.Filter, {});
+    rb.query('DateStart', params.DateStart, {});
+    rb.query('DateEnd', params.DateEnd, {});
   }
 
   return http.request(

@@ -1,0 +1,91 @@
+<section>
+  
+  <mat-card class="mt-3 ">
+    <mat-card-content>
+
+      <section class="mx-5">
+
+        <h2>
+          @if(userForm.controls.userId.value == 0){
+            Agregar
+          }
+          @else {
+            Editar
+          }
+        </h2>
+
+        <form [formGroup]="userForm">
+
+          <input type="hidden" formControlName="userId">
+
+          <div class="row">
+
+            <div class="col-12 col-sm-12 col-md-4">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Usuario</mat-label>
+                <input matInput maxlength="50" placeholder="Ingrese Usuario" formControlName="username">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+              </mat-form-field>
+            </div>
+    
+            <div class="col-12 col-sm-12 col-md-4">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput maxlength="50" placeholder="Ingrese Nombre" formControlName="fisrtName">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+              </mat-form-field>
+            </div>
+    
+            <div class="col-12 col-sm-12 col-md-4">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Apellido</mat-label>
+                <input matInput maxlength="50" placeholder="Ingrese Apellido" formControlName="lastName">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+              </mat-form-field>
+            </div>
+    
+          </div>
+    
+          <div class="row">
+            
+            <div class="col-12 col-sm-12 col-md-4">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput maxlength="50" placeholder="Ingrese Email" formControlName="email">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+              </mat-form-field>
+            </div>
+    
+            <div class="col-12 col-sm-12 col-md-4">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput maxlength="50" type="password" placeholder="Ingrese Password" formControlName="password">
+                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+              </mat-form-field>
+            </div>
+    
+          </div>
+  
+          <div class="row justify-content-end">
+            <div class="col-12 col-sm-12 col-md-4">
+              <button mat-raised-button class="full-width" type="submit" (click)="submitForm()" color="primary">
+                <mat-icon>save</mat-icon>
+                Guardar
+            </button>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4">
+              <button mat-raised-button class="full-width" type="button" color="warn" (click)="cancel()" >
+                <mat-icon>cancel</mat-icon>
+                Cancelar
+            </button>
+            </div>
+          </div>
+
+        </form>
+
+      </section>
+
+    </mat-card-content>
+  </mat-card>
+  
+</section>

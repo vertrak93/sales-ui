@@ -3,6 +3,6 @@
 export interface UserRoleDto {
   roleId?: number;
   roleName?: string | null;
-  userId?: number;
+  userId?: number | null;
   userRoleId?: number;
 }

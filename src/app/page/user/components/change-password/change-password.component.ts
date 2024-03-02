@@ -16,6 +16,7 @@ import { UserService } from '../../../../shared/api/services';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { replicatePassword } from '../../../../shared/utils/validators/replicatePassword';
+import { Alerts } from '../../../../shared/utils/alerts';
 
 @Component({
   selector: 'app-change-password',
@@ -40,6 +41,7 @@ export class ChangePasswordComponent {
 
   private userSrv: UserService = inject(UserService);
   private formBuilder: FormBuilder = inject(FormBuilder);
+  private alert: Alerts = inject(Alerts);
 
   constructor(
     public dialogRef: MatDialogRef<ChangePasswordComponent>,
@@ -76,6 +78,7 @@ export class ChangePasswordComponent {
     this.userSrv.apiUserChangePasswordPut$Json( { body: data } ).subscribe({
       next: () =>{
         this.dialogRef.close('done');
+        this.alert.Toast('Contraseña cambiada.','success');
       },
       error: () => {
         this.disableSubmit = false;

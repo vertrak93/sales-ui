@@ -10,12 +10,22 @@ import { ApiResponseDto } from '../../models/api-response-dto';
 
 export interface ApiUserRoleUseridGet$Plain$Params {
   userid: number;
+  Page?: number;
+  PageSize?: number;
+  Filter?: string;
+  DateStart?: string;
+  DateEnd?: string;
 }
 
 export function apiUserRoleUseridGet$Plain(http: HttpClient, rootUrl: string, params: ApiUserRoleUseridGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
   const rb = new RequestBuilder(rootUrl, apiUserRoleUseridGet$Plain.PATH, 'get');
   if (params) {
     rb.path('userid', params.userid, {});
+    rb.query('Page', params.Page, {});
+    rb.query('PageSize', params.PageSize, {});
+    rb.query('Filter', params.Filter, {});
+    rb.query('DateStart', params.DateStart, {});
+    rb.query('DateEnd', params.DateEnd, {});
   }
 
   return http.request(

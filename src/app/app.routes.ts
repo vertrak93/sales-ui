@@ -3,6 +3,8 @@ import { HomeComponent } from './page/home/home.component';
 import { LoginComponent } from './page/login/login.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { UserComponent } from './page/user/user.component';
+import { UserFormComponent } from './page/user/components/user-form/user-form.component';
+import { UserAddComponent } from './page/user/user-add/user-add.component';
 
 export const routes: Routes = [
     {
@@ -23,7 +25,17 @@ export const routes: Routes = [
     {
         path: 'user',
         component: UserComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard],
+    },
+    {
+        path: 'user/add',
+        component: UserAddComponent,
+        canActivate: [authGuard],
+    },
+    {
+        path: 'user/edit',
+        component: UserAddComponent,
+        canActivate: [authGuard],
     },
     {
         path: '**',
