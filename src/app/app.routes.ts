@@ -24,18 +24,23 @@ export const routes: Routes = [
     },
     {
         path: 'user',
-        component: UserComponent,
-        canActivate: [authGuard],
-    },
-    {
-        path: 'user/add',
-        component: UserAddComponent,
-        canActivate: [authGuard],
-    },
-    {
-        path: 'user/edit',
-        component: UserAddComponent,
-        canActivate: [authGuard],
+        children: [
+            {
+                path: '',
+                component: UserComponent,
+                canActivate: [authGuard],
+            },
+            {
+                path: 'add',
+                component: UserAddComponent,
+                canActivate: [authGuard],
+            },
+            {
+                path: 'edit',
+                component: UserAddComponent,
+                canActivate: [authGuard],
+            },
+        ]
     },
     {
         path: '**',
