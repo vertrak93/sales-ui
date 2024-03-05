@@ -12,6 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoginService } from '../../shared/services/login.service';
 import { AuthenticateDto } from '../../shared/api/models';
 import { AuthService } from '../../shared/api/services';
+import { EMPTY, Subject, catchError, debounceTime, exhaustMap, filter, finalize, from, map, of, takeUntil, tap } from 'rxjs';
 
 
 @Component({
@@ -36,6 +37,9 @@ export class LoginComponent {
   loginSrv:LoginService = inject(LoginService);
   authSrv:AuthService = inject(AuthService);
 
+  submitted$: Subject<void> = new Subject();
+  stop$: Subject<void> = new Subject<void>();
+
   loginForm = this.initializeForm();
   showPassword = false;
   disabledLogin = false;
@@ -49,27 +53,38 @@ export class LoginComponent {
     });
   } 
 
-  submitForm(){
-    if(!this.loginForm.invalid){
-      
-      this.disabledLogin = true;
-      const Authenticate: AuthenticateDto = this.loginForm.value;
+  ngOnInit(){
+    this.onSubmit();
+  }
 
-      this.authSrv.apiAuthLoginPost$Json({body: Authenticate}).subscribe({
-        next: (resp) => {
-          this.loginSrv.HandleLogin(resp);
-        },
-        error: (ex) => {
-          this.errorText = ex.error?.message ? ex.error.message : ex.message;
-          this.errorLogin = true;
-          this.disabledLogin = false;
-        }
-      });
+  onSubmit(){
+    this.submitted$.pipe(
+      filter(() => this.loginForm.valid),
+      tap(() => this.disabledLogin = true),
+      map(() => this.loginForm.value as AuthenticateDto),
+      exhaustMap((value) => this.authSrv.apiAuthLoginPost$Json( { body: value} )
+      .pipe(
+        tap( (res) => this.loginSrv.HandleLogin(res)),
+        finalize( () => this.disabledLogin = false),
+        catchError( async (ex) => this.handlerError(ex) )
+      )),
+      takeUntil(this.stop$)
+    ).subscribe();
+  }
 
-    }
-    else{
-      this.loginForm.markAllAsTouched();
-    }
+  handlerError(ex:any){
+    this.errorText = ex.error?.message ? ex.error.message : ex.message;
+    this.errorLogin = true;
+    this.disabledLogin = false;
+  }
+
+  ngOnDestroy(): void {
+    this.stop();
+  }
+
+  stop(){
+    this.stop$.next();
+    this.stop$.complete();
   }
 
 }

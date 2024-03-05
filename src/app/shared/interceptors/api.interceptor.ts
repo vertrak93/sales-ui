@@ -24,7 +24,9 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
       if (err.status === 401) {
         return jwtInterceptorSrv.handle401Error(req, next, err)
       }
-      jwtInterceptorSrv.handleError(err);
+      else if(err.status != 460){ //custom error for login
+        jwtInterceptorSrv.handleError(err);
+      }
       return throwError( () => err );
     })
   );

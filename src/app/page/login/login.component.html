@@ -45,15 +45,13 @@
                     }
                 </mat-form-field>
 
-                <button type="submit" mat-flat-button color="primary" class="full-width color-white" (click)="submitForm()" [disabled]="disabledLogin">
-                    @if (!disabledLogin) {
-                        Ingresar
-                    }
+                <button type="submit" mat-flat-button color="primary" class="full-width" (click)="submitted$.next()">
                     @if(disabledLogin){
                         <mat-icon>
-                            <mat-spinner color="primary" diameter="18"></mat-spinner>
+                            <mat-spinner color="accent" diameter="16"></mat-spinner>
                         </mat-icon>
                     }
+                    Ingresar
                 </button>
 
                 @if(errorLogin){
