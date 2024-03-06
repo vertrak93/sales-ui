@@ -9,10 +9,11 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { LoginService } from '../../shared/services/login.service';
+import { LoginService } from '../../shared/services/common/login.service';
 import { AuthenticateDto } from '../../shared/api/models';
 import { AuthService } from '../../shared/api/services';
-import { EMPTY, Subject, catchError, debounceTime, exhaustMap, filter, finalize, from, map, of, takeUntil, tap } from 'rxjs';
+import { Subject, catchError, exhaustMap, filter, finalize, map, takeUntil, tap } from 'rxjs';
+import { AutoDestroyService } from '../../shared/services/utils/auto-destroy.service';
 
 
 @Component({
@@ -27,31 +28,27 @@ import { EMPTY, Subject, catchError, debounceTime, exhaustMap, filter, finalize,
     ReactiveFormsModule,
     MatProgressSpinnerModule
   ],
+  providers: [ AutoDestroyService ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
-  formBuilder:FormBuilder = inject(FormBuilder);
-  routerSrv:Router = inject(Router);
-  loginSrv:LoginService = inject(LoginService);
-  authSrv:AuthService = inject(AuthService);
+  private formBuilder:FormBuilder = inject(FormBuilder);
+  private loginSrv:LoginService = inject(LoginService);
+  private authSrv:AuthService = inject(AuthService);
+  private destroy$: AutoDestroyService = inject(AutoDestroyService);
 
   submitted$: Subject<void> = new Subject();
-  stop$: Subject<void> = new Subject<void>();
 
-  loginForm = this.initializeForm();
+  loginForm = this.formBuilder.group({
+    username: ['', [Validators.required,Validators.maxLength(50)]],
+    password: ['', [Validators.required,Validators.maxLength(50)]]
+  });
   showPassword = false;
   disabledLogin = false;
   errorLogin = false;
   errorText = '';
-
-  initializeForm(){
-    return this.formBuilder.group({
-      username: ['', [Validators.required,Validators.maxLength(50)]],
-      password: ['', [Validators.required,Validators.maxLength(50)]]
-    });
-  } 
 
   ngOnInit(){
     this.onSubmit();
@@ -68,7 +65,7 @@ export class LoginComponent {
         finalize( () => this.disabledLogin = false),
         catchError( async (ex) => this.handlerError(ex) )
       )),
-      takeUntil(this.stop$)
+      takeUntil(this.destroy$)
     ).subscribe();
   }
 
@@ -76,15 +73,6 @@ export class LoginComponent {
     this.errorText = ex.error?.message ? ex.error.message : ex.message;
     this.errorLogin = true;
     this.disabledLogin = false;
-  }
-
-  ngOnDestroy(): void {
-    this.stop();
-  }
-
-  stop(){
-    this.stop$.next();
-    this.stop$.complete();
   }
 
 }

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
-import { SideNavService } from '../../../services/side-nav.service';
+import { SideNavService } from '../../../services/common/side-nav.service';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
-import { ScreenService } from '../../../services/screen.service';
+import { ScreenService } from '../../../services/utils/screen.service';
 
 @Component({
   selector: 'app-sidenav',

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/components/layout/header/header.component";
 import { SidenavComponent } from './shared/components/layout/sidenav/sidenav.component';
-import { LoginService } from './shared/services/login.service';
+import { LoginService } from './shared/services/common/login.service';
 
 @Component({
     selector: 'app-root',

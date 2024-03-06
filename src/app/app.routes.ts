@@ -24,26 +24,13 @@ export const routes: Routes = [
     },
     {
         path: 'user',
-        children: [
-            {
-                path: '',
-                component: UserComponent,
-                canActivate: [authGuard],
-            },
-            {
-                path: 'add',
-                component: UserAddComponent,
-                canActivate: [authGuard],
-            },
-            {
-                path: 'edit',
-                component: UserAddComponent,
-                canActivate: [authGuard],
-            },
-        ]
+        loadChildren: () =>
+            import('./page/user/user.routes').then(
+                (m) => m.USER_ROUTES
+            )
     },
     {
         path: '**',
-        redirectTo: '/home'
+        redirectTo: 'home'
     }
 ];

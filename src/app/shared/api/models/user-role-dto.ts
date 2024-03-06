@@ -4,5 +4,5 @@ export interface UserRoleDto {
   roleId?: number;
   roleName?: string | null;
   userId?: number | null;
-  userRoleId?: number;
+  userRoleId?: number | null;
 }

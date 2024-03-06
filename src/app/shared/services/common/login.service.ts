@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiResponseDto, AuthenticateDto, UserDto } from '../api/models';
-import { AuthService } from '../api/services';
+import { ApiResponseDto, AuthenticateDto, UserDto } from '../../api/models';
+import { AuthService } from '../../api/services';
 import { HttpContextToken } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 

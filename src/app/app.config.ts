@@ -6,9 +6,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { CookieService } from 'ngx-cookie-service';
 
-import { SideNavService } from './shared/services/side-nav.service';
+import { SideNavService } from './shared/services/common/side-nav.service';
 import { AuthService } from './shared/api/services';
-import { LoginService } from './shared/services/login.service';
+import { LoginService } from './shared/services/common/login.service';
 import { ApiInterceptorService, apiInterceptor } from './shared/interceptors/api.interceptor';
 import { Alerts } from './shared/utils/alerts';
 

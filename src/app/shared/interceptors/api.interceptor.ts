@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from
 import { Injectable, inject } from '@angular/core';
 
 import { CookieService } from 'ngx-cookie-service';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../services/common/login.service';
 import { BehaviorSubject, catchError, filter, switchMap, take, throwError } from 'rxjs';
 import { TokenDto, UserDto } from '../api/models';
 import { AuthService } from '../api/services';
