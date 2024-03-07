@@ -90,7 +90,6 @@ export class UserTableComponent {
   }
 
   edit(item:UserDto){
-    console.log('send:',item)
     this.roter.navigate(['user/edit'], { state: item });
   }
 
@@ -128,7 +127,7 @@ export class UserTableComponent {
   }
 
   activateUser(userId:number){
-    this.userSrv.apiUserActiveIdPatch$Json( {id: userId} ).pipe(
+    this.userSrv.apiUserActivateIdPatch$Json( {id: userId} ).pipe(
       takeUntil(this.destroy$)
     ).subscribe( () =>{
       this.alerts.Toast('Usuario activado.','success');

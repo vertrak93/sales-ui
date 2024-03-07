@@ -17,6 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { replicatePassword } from '../../../../shared/utils/validators/replicatePassword';
 import { Alerts } from '../../../../shared/utils/alerts';
+import { Subject, exhaustMap, filter, finalize, map, takeUntil, tap } from 'rxjs';
+import { passwordRegex } from '../../../../shared/utils/regex';
+import { AutoDestroyService } from '../../../../shared/services/utils/auto-destroy.service';
 
 @Component({
   selector: 'app-change-password',
@@ -34,6 +37,7 @@ import { Alerts } from '../../../../shared/utils/alerts';
     MatDialogActions,
     MatDialogClose,
   ],
+  providers: [ AutoDestroyService ],
   templateUrl: './change-password.component.html',
   styleUrl: './change-password.component.scss'
 })
@@ -42,56 +46,44 @@ export class ChangePasswordComponent {
   private userSrv: UserService = inject(UserService);
   private formBuilder: FormBuilder = inject(FormBuilder);
   private alert: Alerts = inject(Alerts);
+  private destroy$: AutoDestroyService = inject(AutoDestroyService);
 
+  submitted$: Subject<void> = new Subject();
+  disableSubmit = false;
   constructor(
     public dialogRef: MatDialogRef<ChangePasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UserDto
   ) {}
 
-  formChangePassword = this.initializeForm();
-  passwordRegex = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-\.]).{8,}$';
-  disableSubmit = false;
+  formChangePassword = this.formBuilder.group({
+    password: ['', [Validators.required, Validators.pattern(passwordRegex)]],
+    passwordReply: ['', [Validators.required, Validators.pattern(passwordRegex), replicatePassword('password')]],
+  });
+  
+  ngOnInit(): void {
+    this.onSubmit();
+  }
 
-  value1 = '';
-  value2 = '';
-
-  initializeForm(){
-    return this.formBuilder.group({
-      password: ['', [Validators.required, Validators.pattern(this.passwordRegex)]],
-      passwordReply: ['', [Validators.required, Validators.pattern(this.passwordRegex), replicatePassword('password')]],
+  onSubmit(){
+    this.submitted$.pipe(
+      filter(()=> this.formChangePassword.valid),
+      tap(() => { 
+        this.disableSubmit = true; 
+        this.data.password = this.formChangePassword.controls.password.value;
+      }),
+      map(() => this.data),
+      exhaustMap((user) => this.userSrv.apiUserChangePasswordPut$Json( { body: user } )
+      .pipe(
+        finalize( () => this.disableSubmit = false),
+      )),
+      takeUntil(this.destroy$)
+    ).subscribe( () => {
+        this.dialogRef.close('done');
+        this.alert.Toast('Contraseña cambiada.','success');
     });
   }
 
-  submitForm(){
-    if(this.formChangePassword.valid){
-      const data = {...this.data};
-      data.password = this.formChangePassword.controls.password.value;
-      this.changePassword(data);
-    }
-    else{
-      this.formChangePassword.markAllAsTouched();
-    }
-  }
-
-  changePassword(data:any){
-    this.disableSubmit = true;
-    this.userSrv.apiUserChangePasswordPut$Json( { body: data } ).subscribe({
-      next: () =>{
-        this.dialogRef.close('done');
-        this.alert.Toast('Contraseña cambiada.','success');
-      },
-      error: () => {
-        this.disableSubmit = false;
-      },
-      complete: () => {
-        this.disableSubmit = false;
-      }
-    })
-
-  }
-
   validatePassword(){
-    console.log(this.formChangePassword.controls.password.valid != this.formChangePassword.controls.passwordReply.valid);
     return this.formChangePassword.controls.password.valid != this.formChangePassword.controls.passwordReply.valid;
   }
 

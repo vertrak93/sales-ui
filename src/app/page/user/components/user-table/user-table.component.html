@@ -54,10 +54,10 @@
       <th mat-header-cell *matHeaderCellDef>Activo</th>
       <td mat-cell *matCellDef="let row">
         @if(row.active){
-          <mat-icon style="color: #00a100;">check_circle</mat-icon>
+          <mat-icon class="color-success">check_circle</mat-icon>
         }
         @if(!row.active){
-          <mat-icon style="color: #d80404;">do_not_disturb_on</mat-icon>
+          <mat-icon color="warn">do_not_disturb_on</mat-icon>
         }
       </td>
     </ng-container>
@@ -71,7 +71,7 @@
         </button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="edit(row)">
-            <mat-icon>edit</mat-icon>
+            <mat-icon class="color-primary">edit</mat-icon>
             <span>Editar</span>
           </button>
           <button mat-menu-item (click)="changeState(row.active, row.userId)">
@@ -86,11 +86,11 @@
               </span>            
           </button>
           <button mat-menu-item (click)="changePassword(row)">
-            <mat-icon>password</mat-icon>
+            <mat-icon class="color-gray">password</mat-icon>
             <span>Cambiar constraseña</span>
           </button>
           <button mat-menu-item (click)="roles(row)">
-            <mat-icon>admin_panel_settings</mat-icon>
+            <mat-icon class="color-purple">admin_panel_settings</mat-icon>
             <span>Roles</span>
           </button>
         </mat-menu>

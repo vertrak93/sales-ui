@@ -20,15 +20,12 @@ export class SidenavComponent {
   mode:MatDrawerMode = 'side';
 
   constructor(){
-
     this.sideNavSrv.getSideNavOpened().subscribe( value => this.sidenavOpened = value );
     this.screanSrv.isHandset$.subscribe( (e:boolean) => this.updateSideNav(e) );
-    
   }
 
   updateSideNav(isHandset:boolean){
     this.mode = isHandset ? 'over' : 'side';
-    console.log(this.mode);
     this.sideNavSrv.setSideNavOpened(!isHandset);
   }
 

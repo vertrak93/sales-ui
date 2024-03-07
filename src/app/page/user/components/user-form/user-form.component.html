@@ -6,15 +6,11 @@
       <section class="mx-5">
 
         <h2>
-          @if(userForm.controls.userId.value == 0){
-            Agregar
-          }
-          @else {
-            Editar
-          }
+          @if(userForm.controls.userId.value == 0){ Agregar }
+          @else { Editar }
         </h2>
 
-        <form [formGroup]="userForm">
+        <form [formGroup]="userForm" (ngSubmit)="submitted$.next()">
 
           <input type="hidden" formControlName="userId">
 
@@ -25,6 +21,7 @@
                 <mat-label>Usuario</mat-label>
                 <input matInput maxlength="50" placeholder="Ingrese Usuario" formControlName="username">
                 @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                @if(userForm.controls.username.errors?.['pattern']){ <mat-error>* El usuario no tiene un formato valido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -32,7 +29,8 @@
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Nombre</mat-label>
                 <input matInput maxlength="50" placeholder="Ingrese Nombre" formControlName="fisrtName">
-                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                @if(userForm.controls.fisrtName.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                @if(userForm.controls.fisrtName.errors?.['pattern']){ <mat-error>* Formato no valido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -40,7 +38,8 @@
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Apellido</mat-label>
                 <input matInput maxlength="50" placeholder="Ingrese Apellido" formControlName="lastName">
-                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                @if(userForm.controls.lastName.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                @if(userForm.controls.lastName.errors?.['pattern']){ <mat-error>* Formato no valido.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -51,16 +50,18 @@
             <div class="col-12 col-sm-12 col-md-4">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput maxlength="50" placeholder="Ingrese Email" formControlName="email">
-                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                <input id="userEmail" name="userEmail" matInput maxlength="50" type="email" placeholder="Ingrese Email" formControlName="email">
+                @if(userForm.controls.email.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                @if(userForm.controls.email.errors?.['email']){ <mat-error>* Formato de correo no valido.</mat-error> }
               </mat-form-field>
             </div>
     
             <div class="col-12 col-sm-12 col-md-4">
               <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Password</mat-label>
-                <input matInput maxlength="50" type="password" placeholder="Ingrese Password" formControlName="password">
-                @if(userForm.controls.username.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                <mat-label>Contraseña</mat-label>
+                <input id="userPassword" name="userPassword" matInput maxlength="50" type="password" placeholder="Ingrese Password" formControlName="password">
+                @if(userForm.controls.password.errors?.['required']){ <mat-error>* Campo requerido.</mat-error> }
+                @if(userForm.controls.password.errors?.['pattern']){ <mat-error>* La contraseña no tiene el formato correcto.</mat-error> }
               </mat-form-field>
             </div>
     
@@ -68,8 +69,15 @@
   
           <div class="row justify-content-end">
             <div class="col-12 col-sm-12 col-md-4">
-              <button mat-raised-button class="full-width" type="submit" (click)="submitForm()" color="primary">
-                <mat-icon>save</mat-icon>
+              <button mat-raised-button class="full-width" type="submit" color="primary">
+                @if(disabledSubmit){
+                  <mat-icon>
+                      <mat-spinner class="white-spinner" color="accent" diameter="16"></mat-spinner>
+                  </mat-icon>
+                }
+                @else {
+                  <mat-icon>save</mat-icon>
+                }
                 Guardar
             </button>
             </div>

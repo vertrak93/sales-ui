@@ -1674,7 +1674,7 @@
         }
       }
     },
-    "/api/user/active/{id}": {
+    "/api/user/activate/{id}": {
       "patch": {
         "tags": [
           "User"

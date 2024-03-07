@@ -7,7 +7,7 @@
         </div>
     }
 
-    <table mat-table [dataSource]="data">
+    <table mat-table [dataSource]="$userRoles()">
 
         <ng-container matColumnDef="number">
             <th mat-header-cell *matHeaderCellDef>#</th>
@@ -22,7 +22,7 @@
         <ng-container matColumnDef="userId">
             <th mat-header-cell *matHeaderCellDef>Rol</th>
             <td mat-cell *matCellDef="let row">
-                <mat-checkbox (change)="changeCheck($event, row)" [checked]="row.userId != null" [disabled]="disableCheckBox"></mat-checkbox>
+                <mat-checkbox (change)="onChangeCheck($event, row)" [checked]="row.userId != null" [disabled]="disableCheckBox"></mat-checkbox>
             </td>
         </ng-container>
 
@@ -37,7 +37,7 @@
         </div>
     }
 
-    <mat-paginator [length]="dataLength" [pageSize]="pageSize" aria-label="Select page of Users search results"></mat-paginator>
+    <mat-paginator [length]="userRolesLength" [pageSize]="pageSize" aria-label="Select page of Users search results"></mat-paginator>
 
 </section>
 

@@ -10,10 +10,10 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
 import { ApiResponseDto } from '../models/api-response-dto';
-import { apiUserActiveIdPatch$Json } from '../fn/user/api-user-active-id-patch-json';
-import { ApiUserActiveIdPatch$Json$Params } from '../fn/user/api-user-active-id-patch-json';
-import { apiUserActiveIdPatch$Plain } from '../fn/user/api-user-active-id-patch-plain';
-import { ApiUserActiveIdPatch$Plain$Params } from '../fn/user/api-user-active-id-patch-plain';
+import { apiUserActivateIdPatch$Json } from '../fn/user/api-user-activate-id-patch-json';
+import { ApiUserActivateIdPatch$Json$Params } from '../fn/user/api-user-activate-id-patch-json';
+import { apiUserActivateIdPatch$Plain } from '../fn/user/api-user-activate-id-patch-plain';
+import { ApiUserActivateIdPatch$Plain$Params } from '../fn/user/api-user-activate-id-patch-plain';
 import { apiUserChangePasswordPut$Json } from '../fn/user/api-user-change-password-put-json';
 import { ApiUserChangePasswordPut$Json$Params } from '../fn/user/api-user-change-password-put-json';
 import { apiUserChangePasswordPut$Plain } from '../fn/user/api-user-change-password-put-plain';
@@ -229,49 +229,49 @@ export class UserService extends BaseService {
     );
   }
 
-  /** Path part for operation `apiUserActiveIdPatch()` */
-  static readonly ApiUserActiveIdPatchPath = '/api/user/active/{id}';
+  /** Path part for operation `apiUserActivateIdPatch()` */
+  static readonly ApiUserActivateIdPatchPath = '/api/user/activate/{id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiUserActiveIdPatch$Plain()` instead.
+   * To access only the response body, use `apiUserActivateIdPatch$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserActiveIdPatch$Plain$Response(params: ApiUserActiveIdPatch$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
-    return apiUserActiveIdPatch$Plain(this.http, this.rootUrl, params, context);
+  apiUserActivateIdPatch$Plain$Response(params: ApiUserActivateIdPatch$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
+    return apiUserActivateIdPatch$Plain(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiUserActiveIdPatch$Plain$Response()` instead.
+   * To access the full response (for headers, for example), `apiUserActivateIdPatch$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserActiveIdPatch$Plain(params: ApiUserActiveIdPatch$Plain$Params, context?: HttpContext): Observable<ApiResponseDto> {
-    return this.apiUserActiveIdPatch$Plain$Response(params, context).pipe(
+  apiUserActivateIdPatch$Plain(params: ApiUserActivateIdPatch$Plain$Params, context?: HttpContext): Observable<ApiResponseDto> {
+    return this.apiUserActivateIdPatch$Plain$Response(params, context).pipe(
       map((r: StrictHttpResponse<ApiResponseDto>): ApiResponseDto => r.body)
     );
   }
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiUserActiveIdPatch$Json()` instead.
+   * To access only the response body, use `apiUserActivateIdPatch$Json()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserActiveIdPatch$Json$Response(params: ApiUserActiveIdPatch$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
-    return apiUserActiveIdPatch$Json(this.http, this.rootUrl, params, context);
+  apiUserActivateIdPatch$Json$Response(params: ApiUserActivateIdPatch$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
+    return apiUserActivateIdPatch$Json(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `apiUserActiveIdPatch$Json$Response()` instead.
+   * To access the full response (for headers, for example), `apiUserActivateIdPatch$Json$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiUserActiveIdPatch$Json(params: ApiUserActiveIdPatch$Json$Params, context?: HttpContext): Observable<ApiResponseDto> {
-    return this.apiUserActiveIdPatch$Json$Response(params, context).pipe(
+  apiUserActivateIdPatch$Json(params: ApiUserActivateIdPatch$Json$Params, context?: HttpContext): Observable<ApiResponseDto> {
+    return this.apiUserActivateIdPatch$Json$Response(params, context).pipe(
       map((r: StrictHttpResponse<ApiResponseDto>): ApiResponseDto => r.body)
     );
   }

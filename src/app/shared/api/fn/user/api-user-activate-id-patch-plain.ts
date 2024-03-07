@@ -8,18 +8,18 @@ import { RequestBuilder } from '../../request-builder';
 
 import { ApiResponseDto } from '../../models/api-response-dto';
 
-export interface ApiUserActiveIdPatch$Json$Params {
+export interface ApiUserActivateIdPatch$Plain$Params {
   id: number;
 }
 
-export function apiUserActiveIdPatch$Json(http: HttpClient, rootUrl: string, params: ApiUserActiveIdPatch$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
-  const rb = new RequestBuilder(rootUrl, apiUserActiveIdPatch$Json.PATH, 'patch');
+export function apiUserActivateIdPatch$Plain(http: HttpClient, rootUrl: string, params: ApiUserActivateIdPatch$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
+  const rb = new RequestBuilder(rootUrl, apiUserActivateIdPatch$Plain.PATH, 'patch');
   if (params) {
     rb.path('id', params.id, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'json', accept: 'text/json', context })
+    rb.build({ responseType: 'text', accept: 'text/plain', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
@@ -28,4 +28,4 @@ export function apiUserActiveIdPatch$Json(http: HttpClient, rootUrl: string, par
   );
 }
 
-apiUserActiveIdPatch$Json.PATH = '/api/user/active/{id}';
+apiUserActivateIdPatch$Plain.PATH = '/api/user/activate/{id}';

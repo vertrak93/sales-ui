@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@sweetalert2/theme-material-ui/material-ui.scss';
+@import '../src/assets/styles/colors.scss';
 
 * {
 	margin: 0px; 
@@ -12,6 +13,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .full-width{
 	width: 100%;
+}
+
+.white-spinner {
+    --mdc-circular-progress-active-indicator-color: #fff !important;
 }
 
 //sweetalert
@@ -46,4 +51,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .colored-toast .swal2-html-container {
 	color: white;
 }
-  
+
+.color-success{
+	color: $success;
+}
+
+.color-danger{
+	color: $danger;
+}
+
+.color-primary{
+	color: $primary;
+}
+
+.color-navi{
+	color: $navi;
+}
+
+.color-gray{
+	color: $gray;
+}
+
+.color-purple{
+	color: $purple;
+}
