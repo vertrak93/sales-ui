@@ -18,27 +18,29 @@ import { BrandDto } from '../../../../shared/api/models';
 import { Observable, Subject, debounceTime, finalize, map, takeUntil } from 'rxjs';
 import { AutoDestroyService } from '../../../../shared/services/utils/auto-destroy.service';
 import { Alerts } from '../../../../shared/utils/alerts';
+import { FilterTableComponent } from "../../../../shared/components/common/filter-table/filter-table.component";
 
 @Component({
-  selector: 'app-brand-table',
-  standalone: true,
-  imports: [
-    MatIconModule,
-    MatProgressSpinnerModule, 
-    MatTableModule, 
-    MatPaginatorModule,
-    MatMenuModule,
-    FormsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule
-  ],
-  providers: [
-    AutoDestroyService
-  ],
-  templateUrl: './brand-table.component.html',
-  styleUrl: './brand-table.component.scss'
+    selector: 'app-brand-table',
+    standalone: true,
+    providers: [
+        AutoDestroyService
+    ],
+    templateUrl: './brand-table.component.html',
+    styleUrl: './brand-table.component.scss',
+    imports: [
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatMenuModule,
+        FormsModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatButtonModule,
+        FilterTableComponent
+    ]
 })
 export class BrandTableComponent {
 
@@ -58,22 +60,11 @@ export class BrandTableComponent {
   $brands: WritableSignal<BrandDto[]> = signal([]);
   isLoadingResults = true;
   hasAnyBrands = false;
-  filterTimeOut:any = null;
-  filterChange$!:Observable<InputEvent>; 
   filter ='';
-  filtered$: Subject<void> = new Subject();
 
   ngAfterViewInit(){
     this.onPaginator();
-    this.onChangeFilter();
     this.getBrands();
-  }
-
-  onChangeFilter(){
-    this.filtered$.pipe(
-      debounceTime(250),      
-      takeUntil(this.destroy$),
-    ).subscribe( () => this.getBrands());
   }
 
   onPaginator(){
@@ -82,10 +73,6 @@ export class BrandTableComponent {
     ).subscribe(() => {
       this.getBrands();
     });
-  }
-
-  add(){
-    this.roter.navigate(['brand/add']);
   }
 
   getBrands(){
@@ -107,4 +94,8 @@ export class BrandTableComponent {
     this.hasAnyBrands = this.$brands().length === 0;
   }
 
+  handleEventFilter(filter:string){
+    this.filter = filter;
+    this.getBrands();
+  }
 }

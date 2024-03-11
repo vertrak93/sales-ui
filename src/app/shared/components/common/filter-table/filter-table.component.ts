@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { Subject, debounceTime, takeUntil } from 'rxjs';
 import { AutoDestroyService } from '../../../services/utils/auto-destroy.service';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-filter-table',
@@ -12,7 +14,10 @@ import { Router } from '@angular/router';
   imports: [
     MatFormFieldModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AutoDestroyService

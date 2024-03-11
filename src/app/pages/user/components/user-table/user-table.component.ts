@@ -17,30 +17,28 @@ import { UserDto } from '../../../../shared/api/models';
 
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { UserRoleComponent } from '../user-role/user-role.component';
-import { Observable, Subject, Subscription, debounceTime, delay, exhaustMap, finalize, fromEvent, map, switchMap, takeUntil, tap } from 'rxjs';
+import { finalize, map, takeUntil } from 'rxjs';
 import { AutoDestroyService } from '../../../../shared/services/utils/auto-destroy.service';
 import { Alerts } from '../../../../shared/utils/alerts';
+import { FilterTableComponent } from "../../../../shared/components/common/filter-table/filter-table.component";
 
 @Component({
-  selector: 'app-user-table',
-  standalone: true,
-  imports: [
-    MatIconModule,
-    MatProgressSpinnerModule, 
-    MatTableModule, 
-    MatPaginatorModule,
-    MatMenuModule,
-    FormsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule
-  ],
-  providers: [
-    AutoDestroyService
-  ],
-  templateUrl: './user-table.component.html',
-  styleUrl: './user-table.component.scss'
+    selector: 'app-user-table',
+    standalone: true,
+    providers: [
+        AutoDestroyService
+    ],
+    templateUrl: './user-table.component.html',
+    styleUrl: './user-table.component.scss',
+    imports: [
+        MatIconModule,
+        MatProgressSpinnerModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatMenuModule,
+        MatButtonModule,
+        FilterTableComponent
+    ]
 })
 export class UserTableComponent {
 
@@ -60,14 +58,10 @@ export class UserTableComponent {
   $users: WritableSignal<UserDto[]> = signal([]);
   isLoadingResults = true;
   isRateLimitReached = false;
-  filterTimeOut:any = null;
-  filterChange$!:Observable<InputEvent>; 
-  filter ='';
-  filtered$: Subject<void> = new Subject();
+  filter = '';
 
   ngAfterViewInit(){
     this.onPaginator();
-    this.onChangeFilter();
     this.getUsers();
   }
 
@@ -85,15 +79,11 @@ export class UserTableComponent {
     });
   }
 
-  add(){
-    this.roter.navigate(['user/add']);
-  }
-
   edit(item:UserDto){
-    this.roter.navigate(['user/edit'], { state: item });
+    this.roter.navigate(['user','edit'], { state: item });
   }
 
-  changeState(state:boolean, id:number){
+  changeStatus(state:boolean, id:number){
     if(state){ this.inactivateUser(id); }
     else if(!state){ this.activateUser(id); }
   }
@@ -104,13 +94,6 @@ export class UserTableComponent {
     ).subscribe(() => {
       this.getUsers();
     });
-  }
-
-  onChangeFilter(){
-    this.filtered$.pipe(
-      debounceTime(250),      
-      takeUntil(this.destroy$),
-    ).subscribe( () => this.getUsers());
   }
 
   getUsers(){
@@ -147,5 +130,10 @@ export class UserTableComponent {
   handleTableRespose(){
     this.isLoadingResults = false;
     this.isRateLimitReached = this.$users().length === 0;
+  }
+
+  handleEventFilter(filter:string){
+    this.filter = filter;
+    this.getUsers();
   }
 }
