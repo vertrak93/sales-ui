@@ -1,33 +1,30 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './page/home/home.component';
-import { LoginComponent } from './page/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './shared/guards/auth.guard';
-import { UserComponent } from './page/user/user.component';
-import { UserFormComponent } from './page/user/components/user-form/user-form.component';
-import { UserAddComponent } from './page/user/user-add/user-add.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent,
+        loadComponent: ()=> import('./pages/home/home.component').then((c) => c.HomeComponent),
         canActivate: [authGuard]
     },
     {
         path: 'home',
-        component: HomeComponent,
+        loadComponent: ()=> import('./pages/home/home.component').then((c) => c.HomeComponent),
         canActivate: [authGuard]
     },
     {
         path: 'login',
-        component: LoginComponent,
+        loadComponent: ()=> import('./pages/login/login.component').then((c) => c.LoginComponent),
         canActivate: [authGuard]
     },
     {
         path: 'user',
-        loadChildren: () =>
-            import('./page/user/user.routes').then(
-                (m) => m.USER_ROUTES
-            )
+        loadChildren: () => import('./pages/user/user.routes').then((m) => m.USER_ROUTES)
+    },
+    {
+        path: 'brand',
+        loadChildren: () => import('./pages/brand/brand.routes').then((m) => m.BRAND_ROUTES)
     },
     {
         path: '**',

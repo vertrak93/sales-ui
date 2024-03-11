@@ -42,31 +42,21 @@ export class NavMenuComponent {
           ]
       },
       {
-          route: '/product',
           title: 'Productos',
           icon: 'inventory_2',
           children: [
-              {
-                  route: '/product/list',
-                  title: 'Catalogo Productos',
-              },
-              {
-                  route: '/product/inventory',
-                  title: 'Inventario',
-              },
-              {
-                  route: '/product/store',
-                  title: 'Almacenes',
-              },
+            {
+                route: '/brand',
+                title: 'Marcas',
+            }
           ]
       },
       {
-          route: '/master',
           title: 'Otros Maestros',
           icon: 'list',
           children: [
               {
-                  route: '/master/telephony',
+                  route: '/brand',
                   title: 'Telefonias',
               },
               {

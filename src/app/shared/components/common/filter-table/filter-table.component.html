@@ -1,0 +1,16 @@
+<section class="d-flex justify-content-between align-items-center mt-1">
+    <mat-form-field>
+      <mat-label>Buscar</mat-label>
+      <input matInput type="text" #filterInput [(ngModel)]="filter" (ngModelChange)="filtered$.next()">
+      <mat-icon matPrefix>search</mat-icon>
+      @if (filter) {
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="filter =''">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="add()">
+      <mat-icon>add</mat-icon>
+      Agregar
+  </button>
+</section>
