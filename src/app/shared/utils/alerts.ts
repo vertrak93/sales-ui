@@ -41,7 +41,7 @@ export class Alerts{
         });
     }
 
-    ConfirmAlert(text:string, icon:icon, confirmFunction: ()=>void) {
+    ConfirmAlert(text:string, icon:icon, confirmFunction: ()=>any) {
         Swal.fire({
             text: text,
             icon: icon,
@@ -52,7 +52,6 @@ export class Alerts{
             confirmButtonColor: "#1976d2",
             heightAuto: false,
             allowOutsideClick: false
-            
         }).then( (result) => {
             if(result.isConfirmed){
                 confirmFunction();

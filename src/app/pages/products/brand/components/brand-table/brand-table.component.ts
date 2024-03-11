@@ -12,13 +12,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-import { BrandService } from '../../../../shared/api/services';
-import { BrandDto } from '../../../../shared/api/models';
+import { BrandService } from '../../../../../shared/api/services';
+import { BrandDto } from '../../../../../shared/api/models';
 
-import { Observable, Subject, debounceTime, finalize, map, takeUntil } from 'rxjs';
-import { AutoDestroyService } from '../../../../shared/services/utils/auto-destroy.service';
-import { Alerts } from '../../../../shared/utils/alerts';
-import { FilterTableComponent } from "../../../../shared/components/common/filter-table/filter-table.component";
+import { finalize, map, takeUntil } from 'rxjs';
+import { AutoDestroyService } from '../../../../../shared/services/utils/auto-destroy.service';
+import { Alerts } from '../../../../../shared/utils/alerts';
+import { FilterTableComponent } from "../../../../../shared/components/common/filter-table/filter-table.component";
 
 @Component({
     selector: 'app-brand-table',
@@ -71,6 +71,23 @@ export class BrandTableComponent {
     this.paginator.page.pipe(
       takeUntil(this.destroy$)
     ).subscribe(() => {
+      this.getBrands();
+    });
+  }
+
+  edit(item:BrandDto){
+    this.roter.navigate(['brand','edit'], { state: item });
+  }
+
+  delete(item:BrandDto){
+    this.alerts.ConfirmAlert('¿Esta sdeguro que desea eliminar la marca?', 'question', ()=>this.onDeleted(item) );
+  }
+
+  onDeleted(item:BrandDto){
+    this.brandSrv.apiBrandIdDelete$Json( {id: item.brandId!} ).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe( () =>{
+      this.alerts.Toast('Marca eliminada.','success');
       this.getBrands();
     });
   }

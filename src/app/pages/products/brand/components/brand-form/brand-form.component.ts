@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -8,14 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 
-import { ApiResponseDto, BrandDto, UserDto } from '../../../../shared/api/models';
-import { BrandService, UserService } from '../../../../shared/api/services';
+import { BrandDto } from '../../../../../shared/api/models';
+import { BrandService } from '../../../../../shared/api/services';
 
-import { Alerts } from '../../../../shared/utils/alerts';
-import { nameRegex, passwordRegex, userRegex } from '../../../../shared/utils/regex';
+import { Alerts } from '../../../../../shared/utils/alerts';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { EMPTY, Observable, Subject, catchError, delay, exhaustMap, filter, finalize, iif, map, takeUntil, tap } from 'rxjs';
-import { AutoDestroyService } from '../../../../shared/services/utils/auto-destroy.service';
+import { EMPTY, Subject, catchError, exhaustMap, filter, finalize, iif, map, takeUntil, tap } from 'rxjs';
+import { AutoDestroyService } from '../../../../../shared/services/utils/auto-destroy.service';
 
 @Component({
   selector: 'app-brand-form',

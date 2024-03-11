@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './shared/guards/auth.guard';
 
 export const routes: Routes = [
@@ -20,11 +19,15 @@ export const routes: Routes = [
     },
     {
         path: 'user',
-        loadChildren: () => import('./pages/user/user.routes').then((m) => m.USER_ROUTES)
+        loadChildren: () => import('./pages/user/user.routes').then((m) => m.ROUTES)
     },
     {
         path: 'brand',
-        loadChildren: () => import('./pages/brand/brand.routes').then((m) => m.BRAND_ROUTES)
+        loadChildren: () => import('./pages/products/brand/brand.routes').then((m) => m.ROUTES)
+    },
+    {
+        path: 'category',
+        loadChildren: () => import('./pages/products/category/category.routes').then((m) => m.ROUTES)
     },
     {
         path: '**',

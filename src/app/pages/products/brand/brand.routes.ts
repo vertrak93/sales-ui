@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
-import { authGuard } from '../../shared/guards/auth.guard';
+import { authGuard } from '../../../shared/guards/auth.guard';
 
-export const BRAND_ROUTES: Route[] = [
+export const ROUTES: Route[] = [
     {
         path: '',
         loadComponent: ()=> import('./brand.component').then((c) => c.BrandComponent),

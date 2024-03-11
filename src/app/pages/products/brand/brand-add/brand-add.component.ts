@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PageHeaderComponent } from "../../../shared/components/common/page-header/page-header.component";
+import { PageHeaderComponent } from "../../../../shared/components/common/page-header/page-header.component";
 import { BrandFormComponent } from "../components/brand-form/brand-form.component";
 
 @Component({

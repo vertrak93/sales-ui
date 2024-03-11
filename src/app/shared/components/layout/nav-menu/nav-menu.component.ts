@@ -48,6 +48,10 @@ export class NavMenuComponent {
             {
                 route: '/brand',
                 title: 'Marcas',
+            },
+            {
+                route: '/category',
+                title: 'Categorias',
             }
           ]
       },

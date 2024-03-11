@@ -1,4 +1,4 @@
-<app-filter-table [addRoute]="['user','brand']" (filterEmitter)="handleEventFilter($event)"/>
+<app-filter-table [addRoute]="['brand','add']" (filterEmitter)="handleEventFilter($event)"/>
 
 <section class="table-container mat-elevation-z1">
 
@@ -28,11 +28,11 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="edit(row)">
             <mat-icon class="color-primary">edit</mat-icon>
             <span>Editar</span>
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="delete(row)">
               <mat-icon>delete</mat-icon>
               <span>Eliminar</span>            
           </button>
@@ -48,7 +48,7 @@
   
   @if (hasAnyBrands) {
     <div class="text-align-center">
-      No se se obtuvieron datos de marcas.
+      No se se obtuvieron datos de categorias.
     </div>
   }
 
