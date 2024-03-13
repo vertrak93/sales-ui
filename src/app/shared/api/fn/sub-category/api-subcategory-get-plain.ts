@@ -9,11 +9,21 @@ import { RequestBuilder } from '../../request-builder';
 import { ApiResponseDto } from '../../models/api-response-dto';
 
 export interface ApiSubcategoryGet$Plain$Params {
+  Page?: number;
+  PageSize?: number;
+  Filter?: string;
+  DateStart?: string;
+  DateEnd?: string;
 }
 
 export function apiSubcategoryGet$Plain(http: HttpClient, rootUrl: string, params?: ApiSubcategoryGet$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
   const rb = new RequestBuilder(rootUrl, apiSubcategoryGet$Plain.PATH, 'get');
   if (params) {
+    rb.query('Page', params.Page, {});
+    rb.query('PageSize', params.PageSize, {});
+    rb.query('Filter', params.Filter, {});
+    rb.query('DateStart', params.DateStart, {});
+    rb.query('DateEnd', params.DateEnd, {});
   }
 
   return http.request(

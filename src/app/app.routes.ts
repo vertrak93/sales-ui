@@ -30,6 +30,10 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/products/category/category.routes').then((m) => m.ROUTES)
     },
     {
+        path: 'presentation',
+        loadChildren: () => import('./pages/products/presentation/presentation.routes').then((m) => m.ROUTES)
+    },
+    {
         path: '**',
         redirectTo: 'home'
     }

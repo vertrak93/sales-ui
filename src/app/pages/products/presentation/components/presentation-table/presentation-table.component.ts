@@ -12,16 +12,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-import { CategoryService } from '../../../../../shared/api/services';
-import { CategoryDto } from '../../../../../shared/api/models';
+import { PresentationService } from '../../../../../shared/api/services';
+import { PresentationDto } from '../../../../../shared/api/models';
 
 import { finalize, map, takeUntil } from 'rxjs';
 import { AutoDestroyService } from '../../../../../shared/services/utils/auto-destroy.service';
 import { Alerts } from '../../../../../shared/utils/alerts';
 import { FilterTableComponent } from "../../../../../shared/components/common/filter-table/filter-table.component";
 
+
 @Component({
-  selector: 'app-category-table',
+  selector: 'app-presentation-table',
   standalone: true,
   imports: [
     MatIconModule,
@@ -38,13 +39,13 @@ import { FilterTableComponent } from "../../../../../shared/components/common/fi
   ],
   providers: [
     AutoDestroyService
-],
-  templateUrl: './category-table.component.html',
-  styleUrl: './category-table.component.scss'
+  ],
+  templateUrl: './presentation-table.component.html',
+  styleUrl: './presentation-table.component.scss'
 })
-export class CategoryTableComponent {
+export class PresentationTableComponent {
 
-  private categorySrv: CategoryService = inject(CategoryService);
+  private presentationSrv: PresentationService = inject(PresentationService);
   private dialog: MatDialog = inject(MatDialog);
   private roter: Router = inject(Router);
   private destroy$: AutoDestroyService = inject(AutoDestroyService);
@@ -52,68 +53,68 @@ export class CategoryTableComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  displayedColumns: string[] = ['number', 'category', 'options'];
+  displayedColumns: string[] = ['number', 'presentation', 'options'];
   page = 0;
   pageSize = 10;
   pageSizeOptions: number[] = [5,10,50,100]
   categoriesLength = 0;
-  $categories: WritableSignal<CategoryDto[]> = signal([]);
+  $presentations: WritableSignal<PresentationDto[]> = signal([]);
   isLoadingResults = true;
   hasAnyData = false;
   filter ='';
 
   ngAfterViewInit(){
     this.onPaginator();
-    this.getCategories();
+    this.getPresentations();
   }
 
   onPaginator(){
     this.paginator.page.pipe(
       takeUntil(this.destroy$)
     ).subscribe(() => {
-      this.getCategories();
+      this.getPresentations();
     });
   }
 
-  edit(item:CategoryDto){
-    this.roter.navigate(['category','edit'], { state: item });
+  edit(item:PresentationDto){
+    this.roter.navigate(['presentation','edit'], { state: item });
   }
 
-  delete(item:CategoryDto){
-    this.alerts.ConfirmAlert('¿Esta seguro que desea eliminar la categoría?', 'question', ()=>this.onDeleted(item) );
+  delete(item:PresentationDto){
+    this.alerts.ConfirmAlert('¿Esta seguro que desea eliminar la presentación?', 'question', ()=>this.onDeleted(item) );
   }
 
-  onDeleted(item:CategoryDto){
-    this.categorySrv.apiCategoryIdDelete$Json( {id: item.categoryId!} ).pipe(
+  onDeleted(item:PresentationDto){
+    this.presentationSrv.apiPresentationIdDelete$Json( {id: item.presentationId!} ).pipe(
       takeUntil(this.destroy$)
     ).subscribe( () =>{
       this.alerts.Toast('Marca eliminada.','success');
-      this.getCategories();
+      this.getPresentations();
     });
   }
 
-  getCategories(){
+  getPresentations(){
     this.isLoadingResults = true;
-    this.categorySrv.apiCategoryGet$Json( { Page: this.paginator.pageIndex + 1, PageSize: this.pageSize, Filter: this.filter })
+    this.presentationSrv.apiPresentationGet$Json( { Page: this.paginator.pageIndex + 1, PageSize: this.pageSize, Filter: this.filter })
     .pipe(
-      map((response) => { return { lenth: response.total as number, brands: response.data as CategoryDto[] } }), 
+      map((response) => { return { lenth: response.total as number, brands: response.data as PresentationDto[] } }), 
       finalize(() => this.handleTableRespose()),
       takeUntil(this.destroy$)
     ).subscribe((response)=>{
       this.categoriesLength = response.lenth;
-      this.$categories.set(response.brands);
+      this.$presentations.set(response.brands);
     });
     
   }
 
   handleTableRespose(){
     this.isLoadingResults = false;
-    this.hasAnyData = this.$categories().length === 0;
+    this.hasAnyData = this.$presentations().length === 0;
   }
 
   handleEventFilter(filter:string){
     this.filter = filter;
-    this.getCategories();
+    this.getPresentations();
   }
 
 }

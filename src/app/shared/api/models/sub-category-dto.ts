@@ -2,6 +2,7 @@
 /* eslint-disable */
 export interface SubCategoryDto {
   categoryId?: number;
-  nameSubCatagory?: string | null;
+  categoryName?: string | null;
   subCategoryId?: number;
+  subCategoryName?: string | null;
 }

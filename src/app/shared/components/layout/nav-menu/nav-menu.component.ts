@@ -52,6 +52,10 @@ export class NavMenuComponent {
             {
                 route: '/category',
                 title: 'Categorias',
+            },
+            {
+                route: '/presentation',
+                title: 'Presentaciones',
             }
           ]
       },

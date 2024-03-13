@@ -9,11 +9,21 @@ import { RequestBuilder } from '../../request-builder';
 import { ApiResponseDto } from '../../models/api-response-dto';
 
 export interface ApiPresentationGet$Json$Params {
+  Page?: number;
+  PageSize?: number;
+  Filter?: string;
+  DateStart?: string;
+  DateEnd?: string;
 }
 
 export function apiPresentationGet$Json(http: HttpClient, rootUrl: string, params?: ApiPresentationGet$Json$Params, context?: HttpContext): Observable<StrictHttpResponse<ApiResponseDto>> {
   const rb = new RequestBuilder(rootUrl, apiPresentationGet$Json.PATH, 'get');
   if (params) {
+    rb.query('Page', params.Page, {});
+    rb.query('PageSize', params.PageSize, {});
+    rb.query('Filter', params.Filter, {});
+    rb.query('DateStart', params.DateStart, {});
+    rb.query('DateEnd', params.DateEnd, {});
   }
 
   return http.request(
